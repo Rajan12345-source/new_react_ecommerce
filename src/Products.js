@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import FilterSection from "./components/FilterSection";
-import ProductList from "./components/ProductList";
-import Sort from "./components/Sort";
-import { useFilterContext } from "./context/filter_context.js";
+import styled from 'styled-components';
+import FilterSection from './components/FilterSection';
+import ProductList from './components/ProductList';
+import { MdProductionQuantityLimits } from 'react-icons/md';
+import Sort from './components/Sort';
+import { useFilterContext } from './context/filter_context.js';
 
 const Products = () => {
   return (
@@ -11,7 +12,6 @@ const Products = () => {
         <div>
           <FilterSection />
         </div>
-
         <section className="product-view--sort">
           <div className="sort-filter">
             <Sort />

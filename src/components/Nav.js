@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { FiShoppingCart } from "react-icons/fi";
-import { CgMenu, CgClose } from "react-icons/cg";
-import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from "@mui/material";
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { FiShoppingCart } from 'react-icons/fi';
+import { CgMenu, CgClose } from 'react-icons/cg';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Avatar, Button, Tooltip, Typography } from '@mui/material';
+import { useCartContext } from '../context/cart_context';
 
-const Nav = () => {
+const Nav = ({ menu, setMenu }) => {
   const [menuIcon, setMenuIcon] = useState();
 
   const Nav = styled.nav`
@@ -41,7 +42,7 @@ const Nav = () => {
       border: none;
     }
 
-    .mobile-nav-icon[name="close-outline"] {
+    .mobile-nav-icon[name='close-outline'] {
       display: none;
     }
 
@@ -98,8 +99,8 @@ const Nav = () => {
         display: none;
         font-size: 4.2rem;
         position: absolute;
-        top: 30%;
-        right: 10%;
+        top: 5%;
+        right: 5%;
         color: ${({ theme }) => theme.colors.black};
         z-index: 9999;
       }
@@ -162,60 +163,92 @@ const Nav = () => {
       }
     }
   `;
-  const { logout, loginWithRedirect, isAuthenticated } = useAuth0();
-  console.log(window.location);
+  const { user, logout, loginWithRedirect, isAuthenticated } = useAuth0();
+  const { total_item } = useCartContext();
   return (
     <Nav>
-      <div className={menuIcon ? "navbar active" : "navbar"}>
+      <div className={menuIcon ? 'navbar active' : 'navbar'}>
         <ul className="navbar-lists">
           {isAuthenticated ? (
-                 <>
-                   <li>
-            <NavLink
-              to="/"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
-              Home
-            </NavLink>
-          </li>
-                 <li>
-                   <NavLink
-                     to="/products"
-                     className="navbar-link "
-                     onClick={() => setMenuIcon(false)}>
-                     Products
-                   </NavLink>
-                 </li>
-                 <li>
-                   <NavLink
-                     to="/contact"
-                     className="navbar-link "
-                     onClick={() => setMenuIcon(false)}>
-                     Contact
-                   </NavLink>
-                 </li>
-                 <li>
-            <NavLink to="/cart" className="navbar-link cart-trolley--link">
-              <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item"> 10 </span>
-            </NavLink>
-          </li>
-          <li>
-          <Button
-              variant="contained"
-              sx={{ backgroundColor: '#6254f3'}}
-              onClick={() => logout({ returnTo: window.location.origin })}>
-              Log Out
-            </Button>
-          </li>
-                 </>
+            <>
+              <li>
+                <NavLink
+                  to="/"
+                  className="navbar-link "
+                  onClick={() => {
+                    setMenuIcon(false);
+                    setMenu(true);
+                  }}
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/products"
+                  className="navbar-link "
+                  onClick={() => {
+                    setMenuIcon(false);
+                    setMenu(true);
+                  }}
+                >
+                  Products
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/contact"
+                  className="navbar-link "
+                  onClick={() => {
+                    setMenuIcon(false);
+                    setMenu(true);
+                  }}
+                >
+                  Contact
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/cart"
+                  className="navbar-link cart-trolley--link"
+                  onClick={() => {
+                    setMenuIcon(false);
+                    setMenu(true);
+                  }}
+                >
+                  <FiShoppingCart className="cart-trolley" />
+                  <span className="cart-total--item">{total_item}</span>
+                </NavLink>
+              </li>
+              <li>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: '#6254f3' }}
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  Log Out
+                </Button>
+              </li>
+              <Tooltip
+                title={
+                  <Typography variant="h6">
+                    {user?.email ?? user?.nickname}
+                  </Typography>
+                }
+              >
+                <Avatar src={user?.picture} />
+              </Tooltip>
+            </>
           ) : (
             <li>
-            <Button
-             variant="contained"
-             sx={{ backgroundColor: '#6254f3'}}
-             onClick={() => loginWithRedirect()}>Log In</Button>
-          </li>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: '#6254f3' }}
+                onClick={() => loginWithRedirect()}
+              >
+                Log In
+              </Button>
+            </li>
           )}
         </ul>
 
@@ -224,12 +257,18 @@ const Nav = () => {
           <CgMenu
             name="menu-outline"
             className="mobile-nav-icon"
-            onClick={() => setMenuIcon(true)}
+            onClick={() => {
+              setMenuIcon(true);
+              setMenu(false);
+            }}
           />
           <CgClose
             name="close-outline"
             className="mobile-nav-icon close-outline"
-            onClick={() => setMenuIcon(false)}
+            onClick={() => {
+              setMenuIcon(false);
+              setMenu(true);
+            }}
           />
         </div>
       </div>

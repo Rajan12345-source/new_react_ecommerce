@@ -1,24 +1,28 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { AppProvider } from "./context/productContext";
-import { FilterContextProvider } from "./context/filter_context";
-import { Auth0Provider } from "@auth0/auth0-react";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { AppProvider } from './context/productContext';
+import { FilterContextProvider } from './context/filter_context';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { CartProvider } from './context/cart_context';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
+const root = ReactDOM.createRoot(document.getElementById('root'));
+const domain = process.env.REACT_APP_AUTH_DOMAIN;
+const clientId = process.env.REACT_APP_CLIENT_ID;
 root.render(
   <AppProvider>
     <FilterContextProvider>
-    <Auth0Provider
-    domain="dev-b03hkfnh78ourekk.us.auth0.com"
-    clientId="57A7UsDJz9sVLh2WYUT68G0Wz3vGiIBF"
-    redirectUri={window.location.origin}
-  >
-      <App />
-      </Auth0Provider>
+      <CartProvider>
+        <Auth0Provider
+          domain={domain}
+          clientId={clientId}
+          redirectUri={window.location.origin}
+        >
+          <App />
+        </Auth0Provider>
+      </CartProvider>
     </FilterContextProvider>
   </AppProvider>
 );

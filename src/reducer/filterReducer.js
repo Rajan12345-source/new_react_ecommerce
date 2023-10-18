@@ -1,29 +1,9 @@
 const filterReducer = (state, action) => {
   switch (action.type) {
-    case "LOAD_FILTER_PRODUCTS":
+    case 'LOAD_FILTER_PRODUCTS':
       let priceArr = action.payload.map((curElem) => curElem.price);
-      console.log(
-        "🚀 ~ file: filterReducer.js ~ line 5 ~ filterReducer ~ priceArr",
-        priceArr
-      );
-
-      // 1way
-      // console.log(Math.max.apply(null, priceArr));
-
-      // let maxPrice = priceArr.reduce(
-      //   (initialVal, curVal) => Math.max(initialVal, curVal),
-      //   0
-      // );
-      // console.log(
-      //   "🚀 ~ file: filterReducer.js ~ line 16 ~ filterReducer ~ maxPrice",
-      //   maxPrice
-      // );
 
       let maxPrice = Math.max(...priceArr);
-      console.log(
-        "🚀 ~ file: filterReducer.js ~ line 23 ~ filterReducer ~ maxPrice",
-        maxPrice
-      );
 
       return {
         ...state,
@@ -32,19 +12,19 @@ const filterReducer = (state, action) => {
         filters: { ...state.filters, maxPrice, price: maxPrice },
       };
 
-    case "SET_GRID_VIEW":
+    case 'SET_GRID_VIEW':
       return {
         ...state,
         grid_view: true,
       };
 
-    case "SET_LIST_VIEW":
+    case 'SET_LIST_VIEW':
       return {
         ...state,
         grid_view: false,
       };
 
-    case "GET_SORT_VALUE":
+    case 'GET_SORT_VALUE':
       // let userSortValue = document.getElementById("sort");
       // let sort_value = userSortValue.options[userSortValue.selectedIndex].value;
       return {
@@ -52,7 +32,7 @@ const filterReducer = (state, action) => {
         sorting_value: action.payload,
       };
 
-    case "SORTING_PRODUCTS":
+    case 'SORTING_PRODUCTS':
       let newSortData;
       // let tempSortProduct = [...action.payload];
 
@@ -60,19 +40,19 @@ const filterReducer = (state, action) => {
       let tempSortProduct = [...filter_products];
 
       const sortingProducts = (a, b) => {
-        if (sorting_value === "lowest") {
+        if (sorting_value === 'lowest') {
           return a.price - b.price;
         }
 
-        if (sorting_value === "highest") {
+        if (sorting_value === 'highest') {
           return b.price - a.price;
         }
 
-        if (sorting_value === "a-z") {
+        if (sorting_value === 'a-z') {
           return a.name.localeCompare(b.name);
         }
 
-        if (sorting_value === "z-a") {
+        if (sorting_value === 'z-a') {
           return b.name.localeCompare(a.name);
         }
       };
@@ -84,7 +64,7 @@ const filterReducer = (state, action) => {
         filter_products: newSortData,
       };
 
-    case "UPDATE_FILTERS_VALUE":
+    case 'UPDATE_FILTERS_VALUE':
       const { name, value } = action.payload;
 
       return {
@@ -95,7 +75,7 @@ const filterReducer = (state, action) => {
         },
       };
 
-    case "FILTER_PRODUCTS":
+    case 'FILTER_PRODUCTS':
       let { all_products } = state;
       let tempFilterProduct = [...all_products];
 
@@ -107,19 +87,19 @@ const filterReducer = (state, action) => {
         });
       }
 
-      if (category !== "all") {
+      if (category !== 'all') {
         tempFilterProduct = tempFilterProduct.filter(
           (curElem) => curElem.category === category
         );
       }
 
-      if (company !== "all") {
+      if (company !== 'all') {
         tempFilterProduct = tempFilterProduct.filter(
           (curElem) => curElem.company.toLowerCase() === company.toLowerCase()
         );
       }
 
-      if (color !== "all") {
+      if (color !== 'all') {
         tempFilterProduct = tempFilterProduct.filter((curElem) =>
           curElem.colors.includes(color)
         );
@@ -139,18 +119,18 @@ const filterReducer = (state, action) => {
         filter_products: tempFilterProduct,
       };
 
-    case "CLEAR_FILTERS":
+    case 'CLEAR_FILTERS':
       return {
         ...state,
         filters: {
           ...state.filters,
-          text: "",
-          category: "all",
-          company: "all",
-          color: "all",
-          maxPrice: 0,
+          text: '',
+          category: 'all',
+          company: 'all',
+          color: 'all',
+          minPrice: 0,
           price: state.filters.maxPrice,
-          minPrice: state.filters.maxPrice,
+          maxPrice: state.filters.maxPrice,
         },
       };
 

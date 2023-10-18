@@ -1,9 +1,108 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { useCartContext } from './context/cart_context';
+import CartItem from './components/CartItem';
+import { Button } from './styles/Button';
+import { NavLink } from 'react-router-dom';
+import { MdProductionQuantityLimits } from 'react-icons/md';
+import FormatPrice from './Helpers/FormatPrice';
+import { Box, Typography } from '@mui/material';
 
 const Cart = () => {
-  return <Wrapper></Wrapper>;
+  const { cart, clearCart, total_price, shipping_fee } = useCartContext();
+  return cart?.length !== 0 ? (
+    <Wrapper>
+      <div className="container">
+        <div className="cart_heading grid grid-five-column">
+          <p>Item</p>
+          <p className="cart-hide">Price</p>
+          <p>Quantity</p>
+          <p className="cart-hide">Subtotal</p>
+          <p>Remove</p>
+        </div>
+        <hr />
+        <div className="cart-item">
+          {cart?.map((item) => {
+            return <CartItem key={item?.id} {...item} />;
+          })}
+        </div>
+        <hr />
+        <div className="cart-two-button">
+          <NavLink to="/products">
+            <Button>CONTINUE SHOPPING</Button>
+          </NavLink>
+          <div>
+            <Button className="btn-clear" onClick={() => clearCart()}>
+              CLEAR CART
+            </Button>
+          </div>
+        </div>
+        <div className="order-total--amount">
+          <div className="order-total--subdata">
+            <div>
+              <p>subtotal:</p>
+              <p>
+                <FormatPrice price={total_price} />
+              </p>
+            </div>
+            <div>
+              <p>shipping fee :</p>
+              <p>
+                <FormatPrice price={shipping_fee} />
+              </p>
+            </div>
+            <hr />
+            <div>
+              <p>order total :</p>
+              <p>
+                <FormatPrice price={shipping_fee + total_price} />
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+  ) : (
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+    >
+      <MdProductionQuantityLimits
+        style={{
+          width: 60,
+          height: 60,
+          color: 'rgba(221, 24, 24, 0.6)',
+        }}
+      />
+      <Typography variant="h4" color="rgba(0, 0, 0, 0.33)">
+        No Items in cart
+      </Typography>
+      <NavLink to="/products">
+        <Button
+          style={{
+            marginTop: '15px',
+          }}
+        >
+          CONTINUE SHOPPING
+        </Button>
+      </NavLink>
+    </Box>
+  );
 };
 
+const EmptyDiv = styled.div`
+  display: grid;
+  place-items: center;
+  height: 50vh;
+
+  h3 {
+    font-size: 4.2rem;
+    text-transform: capitalize;
+    font-weight: 300;
+  }
+`;
 const Wrapper = styled.section`
   padding: 9rem 0;
 
