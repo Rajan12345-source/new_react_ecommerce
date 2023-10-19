@@ -4,7 +4,7 @@ import { createContext, useReducer, useContext, useEffect } from 'react';
 const CartContext = createContext();
 const getLocalCartData = () => {
   let newCartData = localStorage.getItem('cartdata');
-  if (newCartData.length === 0) {
+  if (newCartData?.length === 0) {
     return [];
   } else {
     return JSON.parse(newCartData);
