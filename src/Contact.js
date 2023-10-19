@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Contact = () => {
   const Wrapper = styled.section`
@@ -17,7 +17,7 @@ const Contact = () => {
           flex-direction: column;
           gap: 3rem;
 
-          input[type="submit"] {
+          input[type='submit'] {
             cursor: pointer;
             transition: all 0.2s;
 
@@ -44,14 +44,17 @@ const Contact = () => {
         style={{ border: 0 }}
         allowFullScreen=""
         loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"></iframe>
+        title="Map"
+        referrerPolicy="no-referrer-when-downgrade"
+      ></iframe>
 
       <div className="container">
         <div className="contact-form">
           <form
             action="https://formspree.io/f/xeqdgwnq"
             method="POST"
-            className="contact-inputs">
+            className="contact-inputs"
+          >
             <input
               type="text"
               placeholder="username"
@@ -74,7 +77,8 @@ const Contact = () => {
               rows="10"
               required
               autoComplete="off"
-              placeholder="Enter you message"></textarea>
+              placeholder="Enter you message"
+            ></textarea>
 
             <input type="submit" value="send" />
           </form>

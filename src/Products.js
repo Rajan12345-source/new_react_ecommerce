@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import FilterSection from './components/FilterSection';
 import ProductList from './components/ProductList';
-import { MdProductionQuantityLimits } from 'react-icons/md';
 import Sort from './components/Sort';
-import { useFilterContext } from './context/filter_context.js';
 
 const Products = () => {
   return (

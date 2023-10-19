@@ -1,6 +1,6 @@
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { Button } from "../styles/Button";
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { Button } from '../styles/Button';
 
 const HeroSection = ({ myData }) => {
   const { name } = myData;
@@ -24,11 +24,7 @@ const HeroSection = ({ myData }) => {
           {/* our homepage image  */}
           <div className="hero-section-image">
             <figure>
-              <img
-                src="images/hero.jpg"
-                alt="hero-section-photo"
-                className="img-style"
-              />
+              <img src="images/hero.jpg" alt="img" className="img-style" />
             </figure>
           </div>
         </div>
@@ -71,7 +67,7 @@ const Wrapper = styled.section`
     position: relative;
 
     &::after {
-      content: "";
+      content: '';
       width: 60%;
       height: 80%;
       background-color: rgba(81, 56, 238, 0.4);
@@ -92,7 +88,7 @@ const Wrapper = styled.section`
     }
 
     figure::after {
-      content: "";
+      content: '';
       width: 50%;
       height: 100%;
       left: 0;

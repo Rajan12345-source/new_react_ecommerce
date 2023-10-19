@@ -1,3 +1,4 @@
+/*eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -20,22 +21,12 @@ const SingleProduct = () => {
 
   const { id } = useParams();
 
-  const {
-    id: alias,
-    name,
-    company,
-    price,
-    description,
-    category,
-    stock,
-    stars,
-    reviews,
-    image,
-  } = singleProduct;
+  const { name, company, price, description, stock, stars, reviews, image } =
+    singleProduct;
 
   useEffect(() => {
     getSingleProduct(`${API}?id=${id}`);
-  }, []);
+  }, [id]);
 
   // if (!isSingleLoading) {
   //   return <div className="page_loading">Loading.....</div>;
