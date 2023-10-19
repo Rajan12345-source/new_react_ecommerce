@@ -16,8 +16,8 @@ root.render(
     <FilterContextProvider>
       <CartProvider>
         <Auth0Provider
-          domain={domain}
-          clientId={clientId}
+          domain="dev-b03hkfnh78ourekk.us.auth0.com"
+          clientId="57A7UsDJz9sVLh2WYUT68G0Wz3vGiIBF"
           redirectUri={window.location.origin}
         >
           <App />
