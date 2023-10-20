@@ -138,7 +138,7 @@ const Nav = ({ menu, setMenu }) => {
         transition: all 3s linear;
 
         .navbar-link {
-          font-size: 4.2rem;
+          font-size: 2.2rem;
         }
       }
       .cart-trolley--link {
@@ -146,12 +146,12 @@ const Nav = ({ menu, setMenu }) => {
 
         .cart-trolley {
           position: relative;
-          font-size: 5.2rem;
+          font-size: 3.2rem;
         }
 
         .cart-total--item {
-          width: 4.2rem;
-          height: 4.2rem;
+          width: 2.5rem;
+          height: 2.5rem;
           font-size: 2rem;
         }
       }

@@ -10,6 +10,7 @@ import { GlobalStyle } from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Success from './components/Success';
 
 const App = () => {
   const theme = {
@@ -51,6 +52,7 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/singleproduct/:id" element={<SingleProduct />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/success" element={<Success />} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
             <Footer />

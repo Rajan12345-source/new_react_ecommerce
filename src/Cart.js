@@ -6,9 +6,33 @@ import { NavLink } from 'react-router-dom';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import FormatPrice from './Helpers/FormatPrice';
 import { Box, Typography } from '@mui/material';
+import { loadStripe } from '@stripe/stripe-js';
 
 const Cart = () => {
   const { cart, clearCart, total_price, shipping_fee } = useCartContext();
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      'pk_test_51J2IGXSCNND4eepqe5xU6O2rLHoe3cD2jvwUkFMjdDLBqdaalJpGqCKskaVsWA2Q0qwXJk9IJ5FuB1byVUCLWiZI00gYeMBENB'
+    );
+    const body = {
+      products: cart,
+    };
+    const header = {
+      'Content-Type': 'application/json',
+    };
+    const res = await fetch(
+      'http://localhost:7000/api/create-checkout-session',
+      {
+        method: 'POST',
+        headers: header,
+        body: JSON.stringify(body),
+      }
+    );
+    const session = await res.json();
+    stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+  };
   return cart?.length !== 0 ? (
     <Wrapper>
       <div className="container">
@@ -35,6 +59,11 @@ const Cart = () => {
               CLEAR CART
             </Button>
           </div>
+        </div>
+        <div className="cart-two-button">
+          <Button className="btn-checkout" onClick={makePayment}>
+            Checkout
+          </Button>
         </div>
         <div className="order-total--amount">
           <div className="order-total--subdata">
@@ -174,6 +203,15 @@ const Wrapper = styled.section`
 
     .btn-clear {
       background-color: #e74c3c;
+      margin-right: 1rem;
+    }
+    .btn-mobile-checkout {
+      display: none;
+      background-color: rgba(0, 116, 8, 0.8);
+    }
+    .btn-checkout {
+      display: block;
+      background-color: rgba(0, 116, 8, 0.8);
     }
   }
 
@@ -246,7 +284,14 @@ const Wrapper = styled.section`
       margin-top: 2rem;
       display: flex;
       justify-content: space-between;
-      gap: 2.2rem;
+    }
+    .btn-mobile-checkout {
+      display: block;
+      background-color: rgba(0, 116, 8, 0.8);
+    }
+    .btn-checkout {
+      display: none;
+      background-color: rgba(0, 116, 8, 0.8);
     }
 
     .order-total--amount {
