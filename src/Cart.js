@@ -21,7 +21,7 @@ const Cart = () => {
       'Content-Type': 'application/json',
     };
     const res = await fetch(
-      'https://restapi-production-f7b0.up.railway.app/api/create-checkout-session',
+      'https://men-restapi.onrender.com/api/create-checkout-session',
       {
         method: 'POST',
         headers: header,
